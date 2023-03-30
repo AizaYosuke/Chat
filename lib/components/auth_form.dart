@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:chat/models/auth_form_data.dart';
+import 'package:chat/core/models/auth_form_data.dart';
 import 'package:flutter/material.dart';
 
 import 'user_image_picker.dart';
@@ -21,22 +21,22 @@ class _AuthFormState extends State<AuthForm> {
     _authFormData.image = image;
   }
 
-  void _showError(String msg) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(msg),
-        backgroundColor: Theme.of(context).colorScheme.error,
-      ),
-    );
-  }
+  // void _showError(String msg) {
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(
+  //       content: Text(msg),
+  //       backgroundColor: Theme.of(context).colorScheme.error,
+  //     ),
+  //   );
+  // }
 
   void _submit() {
     final bool isValid = _formKey.currentState!.validate();
     if (!isValid) return;
 
-    if (_authFormData.image == null && _authFormData.isSignup) {
-      return _showError('Imagem não selecionada!');
-    }
+    // if (_authFormData.image == null && _authFormData.isSignup) {
+    //   return _showError('Imagem não selecionada!');
+    // }
 
     widget.onSubmit(_authFormData);
   }
@@ -96,7 +96,7 @@ class _AuthFormState extends State<AuthForm> {
                   final password = _password ?? '';
 
                   if (password.isEmpty) return 'Senha é obrigatório';
-                  if (password.trim().length <= 8) {
+                  if (password.trim().length < 8) {
                     return 'Senha precisa ter pelo menos 8 caracteres';
                   }
 
