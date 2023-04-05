@@ -1,7 +1,7 @@
-import 'package:chat/core/services/auth/auth_mock_service.dart';
+import 'package:chat/components/messages.dart';
+import 'package:chat/components/new_message.dart';
+import 'package:chat/core/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class ChatPage extends StatelessWidget {
   const ChatPage({super.key});
@@ -9,17 +9,48 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      appBar: AppBar(
+        title: Text('Chat'),
+        actions: [
+          DropdownButton(
+            icon: Icon(
+              Icons.more_vert,
+              color: Theme.of(context).primaryIconTheme.color,
+            ),
+            items: [
+              DropdownMenuItem(
+                value: 'logout',
+                child: Container(
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.logout,
+                        color: Colors.black87,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text('Sair'),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+            onChanged: (value) {
+              if (value == 'logout') {
+                AuthService().logout();
+              }
+            },
+          ),
+        ],
+      ),
+      body: SafeArea(
         child: Column(
           children: [
-            CircleAvatar(
-              backgroundImage: AssetImage('assets/images/avatar.png'),
+            Expanded(
+              child: Messages(),
             ),
-            ElevatedButton(
-                onPressed: () {
-                  AuthMockService().logout();
-                },
-                child: Text('Logout')),
+            NewMessage(),
           ],
         ),
       ),
